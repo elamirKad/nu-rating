@@ -1,8 +1,21 @@
 {% extends 'base.html' %}
 {% block title %}Main page{% endblock %}
 {% block content %}
-    {% for course in courses %}
-        <div class=""><a href="{{course.name}}"><p>{{ course.name }}</p></a></div>
-        <br>
-    {% endfor %}
+    <div class="container flex justify-center mt-10">
+        <p class="text-3xl text-gray-300 font-semibold	">Courses</p>
+    </div>
+    <div class="container mt-10">
+        {% for course in courses %}
+        <a href="{{course.name}}">
+            <div class="bg-neutral-700 justify-center flex w-3/5 mx-auto h-12 items-center mt-1 rounded-lg">
+                <div class="text-gray-200">
+                    
+                        <p>{{ course.name }}</p>
+                    
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+        
+    </div>
 {% endblock %}

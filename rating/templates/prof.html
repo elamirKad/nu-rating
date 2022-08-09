@@ -1,9 +1,39 @@
 {% extends 'base.html' %}
 {% block title %}{{profess.name}}{% endblock %}
 {% block content %}
-    <div class="">Professor: {{ profess.name }}</div>
-    <div class="">Overall: {{ profess.overall }}</div>
-    <div class="">Easiness: {{ profess.easy }}</div>
-    <div class="">Knowledge: {{ profess.knowledge }}</div>
-    <div class="">Fun: {{ profess.fun }}</div>
+    <div class="container text-gray-200">
+        <div class="w-2/5 bg-neutral-700 mx-auto rounded-md mt-10">
+            <div class="w-full bg-neutral-600 rounded-t-md flex justify-center py-1">
+                <p class="text-xl">{{ profess.name }}</p>
+            </div>
+            <div class="divide-y divide-neutral-600">
+                <div>
+                    <div class="my-2 ml-2">
+                        Overall: {{ profess.overall }}
+                    </div>
+                </div>
+                <div>
+                    <div class="my-2 ml-2">
+                        Easy: {{ profess.easy }}
+                    </div>
+                </div>
+                <div>
+                    <div class="my-2 ml-2">
+                        Knowledge: {{ profess.knowledge }}
+                    </div>
+                </div>
+                <div>
+                    <div class="my-2 ml-2 pb-2">
+                        Fun: {{ profess.fun }}
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <div class="container text-gray-200">
+        <div class="w-2/5 bg-neutral-700 mx-auto rounded-md mt-5">
+
+        </div>
+    </div>
 {% endblock %}
