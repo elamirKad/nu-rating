@@ -1,8 +1,10 @@
 <!DOCTYPE html>
+{% load tailwind_tags %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %} {% endblock %}</title>
+    {% tailwind_css %}
 </head>
 <body>
     {% block content %}
