@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Professor, Course, Comment
-
+from django.http import JsonResponse
+from rating.extract import get_profs_and_courses
 
 # Create your views here.
 def main(request):
@@ -58,3 +59,33 @@ def calc(comments):
     fun = round(fun / amount, 1)
     overall = round((easy + knowledge + fun) / 3, 1)
     return overall, easy, knowledge, fun, amount
+
+
+def register(request):
+    response_data = get_profs_and_courses()
+    for r in response_data:
+        try:
+            prof = Professor.objects.get(name=r)
+        except:
+            prof = None
+        if prof:
+            for course in response_data[r]:
+                course = course.replace('/', ' OR ')
+                try:
+                    c = Course.objects.get(name=course)
+                except:
+                    c = None
+                if c:
+                    c.professors.add(prof)
+                    print("Added course", course, " to the prof ", r)
+                else:
+                    c = Course(name=course)
+                    c.save()
+                    c.professors.add(prof)
+                    print("Created course ", course, " and added to the prof ", r)
+        else:
+            prof = Professor(name=r)
+            prof.save()
+            print("Created ", r)
+        print(response_data[r], r)
+    return JsonResponse(response_data)
