@@ -33,7 +33,64 @@
     </div>
     <div class="container text-gray-200">
         <div class="w-2/5 bg-neutral-700 mx-auto rounded-md mt-5">
-
+            <div class="flex justify-center">
+                <p class="text-2xl p-1">Comments</p>
+            </div>
+            <form class="shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <div class="mb-4">
+                  <label class="block text-sm mb-2" for="username">
+                    Write your review
+                  </label>
+                  <textarea name="comment" rows="6" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Comment"></textarea>
+                </div>
+                <div class="mb-4 flex flex-row space-x-2">
+                    <div class="w-1/5 text-center">Overall</div>
+                    <input class="w-3/5" type="range" id="overall" name="overall" min="1" max="10" oninput="updateRange(1)">
+                    <div id="overall_text" class="w-1/5 text-center">6</div>
+                </div>
+                <div class="mb-4 flex flex-row space-x-2">
+                    <div class="w-1/5 text-center">Easy</div>
+                    <input class="w-3/5" type="range" id="easy" name="easy" min="1" max="10" oninput="updateRange(2)">
+                    <div id="easy_text" class="w-1/5 text-center">6</div>
+                </div>
+                <div class="mb-4 flex flex-row space-x-2">
+                    <div class="w-1/5 text-center">Knowledge</div>
+                    <input class="w-3/5" type="range" id="knowledge" name="knowledge" min="1" max="10" oninput="updateRange(3)">
+                    <div id="knowledge_text" class="w-1/5 text-center">6</div>
+                </div>
+                <div class="mb-4 flex flex-row space-x-2">
+                    <div class="w-1/5 text-center">Fun</div>
+                    <input class="w-3/5" type="range" id="fun" name="fun" min="1" max="10" oninput="updateRange(4)">
+                    <div id="fun_text" class="w-1/5 text-center">6</div>
+                </div>
+                <div class="mb-4 flex flex-row space-x-2 justify-center">
+                    <button type="submit" class="btn btn-blue bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+                </div>
+            </form>
         </div>
     </div>
+    <script>
+        overall = document.getElementById("overall");
+        overall_text = document.getElementById("overall_text")
+
+        easy = document.getElementById("easy");
+        easy_text = document.getElementById("easy_text")
+
+        knowledge = document.getElementById("knowledge");
+        knowledge_text = document.getElementById("knowledge_text")
+
+        fun = document.getElementById("fun");
+        fun_text = document.getElementById("fun_text")
+        function updateRange (num){
+            if (num === 1){
+                overall_text.innerHTML = overall.value;
+            }else if (num === 2){
+                easy_text.innerHTML = easy.value;
+            }else if (num === 3){
+                knowledge_text.innerHTML = knowledge.value;
+            }else if (num === 4){
+                fun_text.innerHTML = fun.value;
+            }
+        }
+    </script>
 {% endblock %}
