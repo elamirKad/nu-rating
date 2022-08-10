@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% block title %}{{course_name}}{% endblock %}
 {% block content %}
-<div class="container flex justify-center mt-10">
+<div class="container flex justify-center mt-10 mx-auto">
     <p class="text-3xl text-gray-300 font-semibold">Professors for {{course_name}}</p>
 </div>
-<div class="container mt-10">
+<div class="container mt-10 mx-auto">
     {% for prof in profs %}
         <a href="prof/{{prof.name}}">
-            <div class="bg-neutral-700 justify-center flex w-3/5 mx-auto h-12 items-center mt-1 rounded-lg">
+            <div class="bg-gray-800 justify-center flex w-4/5 md:3/5 mx-auto h-16 md:h-12 items-center mt-1 rounded-lg">
                 <div class="text-gray-200">
                     
                         <p>{{ prof.name }}</p>

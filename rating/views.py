@@ -5,11 +5,24 @@ from rating.extract import get_profs_and_courses
 
 # Create your views here.
 def main(request):
-    courses = Course.objects.all()
-    dic = {
-        'courses': courses
-    }
-    return render(request, 'index.html', dic)
+    if request.method == "GET":
+        keywords = request.GET.get('course')
+
+        if keywords:
+            data = Course.objects.filter(name__icontains=keywords).order_by('name')
+        else:
+            data = Course.objects.all().order_by('name')
+
+        dic = {
+            'courses': data
+        }
+        return render(request, 'index.html', dic)
+    else:
+        courses = Course.objects.all().order_by('name')
+        dic = {
+            'courses': courses
+        }
+        return render(request, 'index.html', dic)
 
 def course(request, course_name):
     course = Course.objects.get(name=course_name)

@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-{% load tailwind_tags %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %} {% endblock %}</title>
-    {% tailwind_css %}
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-neutral-800">
+<body class="bg-gray-900">
     {% block content %}
 
     {% endblock %}
