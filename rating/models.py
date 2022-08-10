@@ -12,7 +12,7 @@ class Course(models.Model):
 
 class Comment(models.Model):
     text = models.TextField()
-    overall = models.FloatField(default=0.0)
+    prof = models.CharField(max_length=40, default=None)
     easy = models.FloatField(default=0.0)
     knowledge = models.FloatField(default=0.0)
     fun = models.FloatField(default=0.0)
