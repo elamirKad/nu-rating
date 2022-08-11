@@ -1,7 +1,13 @@
 from tabula import read_pdf
 import pandas as pd
+import requests
+
 
 def get_profs_and_courses():
+    url = 'https://registrar.nu.edu.kz/registrar_downloads/json?method=printDocument&name=school_schedule_by_term&termid=642&academiclevel=1'
+    url2 = 'https://registrar.nu.edu.kz/registrar_downloads/json?method=printDocument&name=school_schedule_by_term&termid=603&academiclevel=1'
+    r = requests.get(url2, allow_redirects=True)
+    open('./rating/school_schedule_by_term.pdf', 'wb').write(r.content)
     pdf = "./rating/school_schedule_by_term.pdf"
     data_format = "columns"
 
@@ -27,5 +33,3 @@ def get_profs_and_courses():
         prof_dict[prof] = dfs_new[dfs_new[11].str.contains(prof)==True][0].tolist()
         #print(dfs_new.loc[dfs_new[11].isin(prof)][0].tolist())
     return prof_dict
-
-
