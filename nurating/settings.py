@@ -30,6 +30,10 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+CRON_CLASSES = [
+    "rating.jobs.MyCronJob",
+]
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -39,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rating',
+    "django_cron",
 ]
 
 MIDDLEWARE = [

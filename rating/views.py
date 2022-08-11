@@ -5,13 +5,17 @@ from rating.extract import get_profs_and_courses
 from rating.courses_details_scrapper import get_course_details
 import time
 
+
 # Create your views here.
 def main(request):
     if request.method == "GET":
         keywords = request.GET.get('course')
 
         if keywords:
-            data = Course.objects.filter(name__icontains=keywords).order_by('name')
+            data = Course.objects.filter(name__icontains=keywords)
+            data2 = Professor.objects.filter(name__icontains=keywords)
+            data = data.union(data2)
+            data = data.order_by('name')
         else:
             data = Course.objects.all().order_by('name')
 
@@ -29,7 +33,10 @@ def main(request):
 def course(request, course_name):
     course = Course.objects.get(name=course_name)
     profs = course.professors.all().order_by('name')
-    details = CourseDescription.objects.get(course=course)
+    try:
+        details = CourseDescription.objects.get(course=course)
+    except:
+        details = None
     dic = {
         'course_name': course_name,
         'profs': profs,

@@ -3,10 +3,13 @@ import pandas as pd
 import requests
 
 
-def get_profs_and_courses():
+def get_profs_and_courses(term):
     url = 'https://registrar.nu.edu.kz/registrar_downloads/json?method=printDocument&name=school_schedule_by_term&termid=642&academiclevel=1'
     url2 = 'https://registrar.nu.edu.kz/registrar_downloads/json?method=printDocument&name=school_schedule_by_term&termid=603&academiclevel=1'
-    r = requests.get(url, allow_redirects=True)
+    if term == 1:
+        r = requests.get(url, allow_redirects=True)
+    elif term == 0:
+        r = requests.get(url2, allow_redirects=True)
     open('./rating/school_schedule_by_term.pdf', 'wb').write(r.content)
     pdf = "./rating/school_schedule_by_term.pdf"
     data_format = "columns"
