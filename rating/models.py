@@ -16,3 +16,14 @@ class Comment(models.Model):
     easy = models.FloatField(default=0.0)
     knowledge = models.FloatField(default=0.0)
     fun = models.FloatField(default=0.0)
+
+class CourseDescription(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    ects = models.IntegerField()
+    school = models.CharField(max_length=255)
+    department = models.CharField(max_length=255)
+    description = models.TextField()
+    prereq = models.CharField(max_length=255)
+    coreq = models.CharField(max_length=255)
+    antireq = models.CharField(max_length=255)

@@ -6,7 +6,7 @@ import requests
 def get_profs_and_courses():
     url = 'https://registrar.nu.edu.kz/registrar_downloads/json?method=printDocument&name=school_schedule_by_term&termid=642&academiclevel=1'
     url2 = 'https://registrar.nu.edu.kz/registrar_downloads/json?method=printDocument&name=school_schedule_by_term&termid=603&academiclevel=1'
-    r = requests.get(url2, allow_redirects=True)
+    r = requests.get(url, allow_redirects=True)
     open('./rating/school_schedule_by_term.pdf', 'wb').write(r.content)
     pdf = "./rating/school_schedule_by_term.pdf"
     data_format = "columns"

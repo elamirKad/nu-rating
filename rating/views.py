@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
-from .models import Professor, Course, Comment
-from django.http import JsonResponse
+from .models import Professor, Course, Comment, CourseDescription
+from django.http import JsonResponse, HttpResponse
 from rating.extract import get_profs_and_courses
+from rating.courses_details_scrapper import get_course_details
+import time
 
 # Create your views here.
 def main(request):
@@ -26,10 +28,11 @@ def main(request):
 
 def course(request, course_name):
     course = Course.objects.get(name=course_name)
-    profs = course.professors.all()
+    profs = course.professors.all().order_by('name')
+
     dic = {
         'course_name': course_name,
-        'profs': profs
+        'profs': profs,
     }
     return render(request, 'course.html', dic)
 
@@ -102,3 +105,27 @@ def register(request):
             print("Created ", r)
         print(response_data[r], r)
     return JsonResponse(response_data)
+
+
+def register_courses_details(request):
+    start_time = time.time()
+    courses = Course.objects.all().order_by('name')
+    for course in courses:
+        print("Processing", course.name)
+        data = get_course_details(course.name)
+        try:
+            course_desc = CourseDescription.objects.get(course=course)
+        except:
+            course_desc = None
+        if not course_desc:
+            try:
+                c = CourseDescription(course=course, title=data['TITLE'], ects=int(data['CRECTS']),
+                                      school=data['SCHOOL'], department=data['DEPARTMENT'], description=data['SHORTDESC'],
+                                      prereq=data['PREREQ'], coreq=data['COREQ'], antireq=data['ANTIREQ'])
+                c.save()
+            except:
+                pass
+        else:
+            print("Course exists")
+    elapsed_time = time.time() - start_time
+    return JsonResponse({"Success, it took": str(elapsed_time) + " seconds"})
