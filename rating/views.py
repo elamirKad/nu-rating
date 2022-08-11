@@ -29,10 +29,11 @@ def main(request):
 def course(request, course_name):
     course = Course.objects.get(name=course_name)
     profs = course.professors.all().order_by('name')
-
+    details = CourseDescription.objects.get(course=course)
     dic = {
         'course_name': course_name,
         'profs': profs,
+        'data': details,
     }
     return render(request, 'course.html', dic)
 
