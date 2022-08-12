@@ -18,20 +18,20 @@ def main(request):
         if keywords:
             data = Course.objects.filter(name__icontains=keywords).order_by('name')
         else:
-            data = cache.get('data')
-            if not data:
-                data = Course.objects.all().order_by('name')
-                cache.set('data', data, 60*60*8)
+            #data = cache.get('data')
+            #if not data:
+            data = Course.objects.all().order_by('name')
+            #cache.set('data', data, 60*60*8)
 
         dic = {
             'courses': data
         }
         return render(request, 'index.html', dic)
     else:
-        courses = cache.get('courses')
-        if not courses:
-            courses = Course.objects.all().order_by('name')
-            cache.set('courses', courses, 60 * 60 * 8)
+        #courses = cache.get('courses')
+        #if not courses:
+        courses = Course.objects.all().order_by('name')
+            #cache.set('courses', courses, 60 * 60 * 8)
         dic = {
             'courses': courses
         }
