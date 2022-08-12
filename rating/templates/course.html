@@ -30,15 +30,15 @@
         </div>
         <div style="background-color: #333533;" class="mt-1 p-1 flex flex-row p-2 rounded-sm">
             <div class="w-1/3 lg:w-1/4"><strong>Pre-requisites:</strong> </div>
-            <div class="w-2/3 lg:w-3/4">{{data.prereq}}</div>
+            <div class="w-2/3 lg:w-3/4">{{data.prereq |safe}}</div>
         </div>
         <div style="background-color: #333533;" class="mt-1 p-1 flex flex-row p-2 rounded-sm">
             <div class="w-1/3 lg:w-1/4"><strong>Co-requisites:</strong> </div>
-            <div class="w-2/3 lg:w-3/4">{{data.coreq}}</div>
+            <div class="w-2/3 lg:w-3/4">{{data.coreq |safe}}</div>
         </div>
         <div style="background-color: #333533;" class="mt-1 p-1 flex flex-row p-2 rounded-sm">
             <div class="w-1/3 lg:w-1/4"><strong>Anti-requisites:</strong> </div>
-            <div class="w-2/3 lg:w-3/4">{{data.antireq}}</div>
+            <div class="w-2/3 lg:w-3/4">{{data.antireq |safe}}</div>
         </div>
         {% else %}
         <p class="flex justify-center">Contact me if this do not work properly</p>

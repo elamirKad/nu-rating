@@ -2,12 +2,12 @@ from django.db import models
 
 # Create your models here.
 class Professor(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=555)
 
 
 
 class Course(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=555)
     professors = models.ManyToManyField(Professor)
 
 class Comment(models.Model):
@@ -19,11 +19,11 @@ class Comment(models.Model):
 
 class CourseDescription(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=555)
     ects = models.IntegerField()
-    school = models.CharField(max_length=255)
-    department = models.CharField(max_length=255)
+    school = models.CharField(max_length=555)
+    department = models.CharField(max_length=555)
     description = models.TextField()
-    prereq = models.CharField(max_length=255)
-    coreq = models.CharField(max_length=255)
-    antireq = models.CharField(max_length=255)
+    prereq = models.CharField(max_length=555)
+    coreq = models.CharField(max_length=555)
+    antireq = models.CharField(max_length=555)

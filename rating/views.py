@@ -1,4 +1,7 @@
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect
+
+from nurating import settings
 from .models import Professor, Course, Comment, CourseDescription
 from django.http import JsonResponse, HttpResponse
 from rating.extract import get_profs_and_courses
@@ -135,5 +138,39 @@ def register_courses_details(request):
                 pass
         else:
             print("Course exists")
+    elapsed_time = time.time() - start_time
+    return JsonResponse({"Success, it took": str(elapsed_time) + " seconds"})
+
+def check_mail(request):
+    subject = 'welcome to GFG world'
+    message = f'Hi thank you for registering in geeksforgeeks.'
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = ["elamirkad@gmail.com"]
+    send_mail(subject, message, email_from, recipient_list)
+    return JsonResponse({"Success": 1})
+
+def update_course_description(request):
+    start_time = time.time()
+    courses = Course.objects.all()
+    flag = False
+    for course in courses:
+        if flag:
+            try:
+                details = CourseDescription.objects.get(course=course)
+                for c in courses:
+                    if f"<a href='/main/{c.name}' style='color:#ffd100;'>{c.name}</a>" not in details.prereq:
+                        details.prereq = details.prereq.replace(c.name, f"<a href='/main/{c.name}' style='color:#ffd100;'>{c.name}</a>")
+                    if f"<a href='/main/{c.name}' style='color:#ffd100;'>{c.name}</a>" not in details.coreq:
+                        details.coreq = details.coreq.replace(c.name, f"<a href='/main/{c.name}' style='color:#ffd100;'>{c.name}</a>")
+                    if f"<a href='/main/{c.name}' style='color:#ffd100;'>{c.name}</a>" not in details.antireq:
+                        details.antireq = details.antireq.replace(c.name, f"<a href='/main/{c.name}' style='color:#ffd100;'>{c.name}</a>")
+                    details.save()
+                print("Success", course.name)
+            except:
+                print("Failure", course.name)
+        else:
+            if course.name == "PHYS 362":
+                print("FOUND")
+                flag = True
     elapsed_time = time.time() - start_time
     return JsonResponse({"Success, it took": str(elapsed_time) + " seconds"})
