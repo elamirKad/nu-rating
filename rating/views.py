@@ -1,5 +1,6 @@
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
+from django.views.decorators import cache
 
 from nurating import settings
 from .models import Professor, Course, Comment, CourseDescription
@@ -15,19 +16,22 @@ def main(request):
         keywords = request.GET.get('course')
 
         if keywords:
-            data = Course.objects.filter(name__icontains=keywords)
-            data2 = Professor.objects.filter(name__icontains=keywords)
-            data = data.union(data2)
-            data = data.order_by('name')
+            data = Course.objects.filter(name__icontains=keywords).order_by('name')
         else:
-            data = Course.objects.all().order_by('name')
+            data = cache.get('data')
+            if not data:
+                data = Course.objects.all().order_by('name')
+                cache.set('data', data, 60*60*8)
 
         dic = {
             'courses': data
         }
         return render(request, 'index.html', dic)
     else:
-        courses = Course.objects.all().order_by('name')
+        courses = cache.get('courses')
+        if not courses:
+            courses = Course.objects.all().order_by('name')
+            cache.set('courses', courses, 60 * 60 * 8)
         dic = {
             'courses': courses
         }
