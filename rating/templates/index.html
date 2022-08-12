@@ -9,11 +9,29 @@
         <form autocomplete="off" method="get" class="w-full">
             <div class="flex w-4/5 md:w-3/5 mx-auto">
                 <input id="course" type="text" style="background-color: #d6d6d6; color: #333533;" class="block p-2 text-sm w-4/5" name="course" placeholder="Input course">
-                <button type="submit" class="w-1/5 btn text-white font-bold py-2 px-4" style="background-color: #ffd100; color: white;">Search</button>
+                <button type="submit" class="w-1/5 btn text-white font-semibold py-2 px-4" style="background-color: #ffd100; color: black;">Search</button>
+            </div>
+            <div style="background-color: #333533; color:white;" class="w-4/5 md:w-3/5 mx-auto flex font-normal flex-row text-white space-x-4 h-12 justify-center items-center">
+                <div class="">
+                    {% if not prof_bool %}
+                    <label for="prof"><input id="prof" type="radio" name="search_type" value="prof">Search by professor</label>
+                    {% else %}
+                    <label for="prof"><input id="prof" type="radio" name="search_type" value="prof" checked="checked">Search by professor</label>
+                    {% endif %}
+                </div>
+                <div class="">
+                    {% if not prof_bool %}
+                    <label><input id="course" type="radio" name="search_type" value="course" checked="checked">Search by course</label>
+                    {% else %}
+                    <label><input id="course" type="radio" name="search_type" value="course">Search by course</label>
+                    {% endif %}
+                    
+                </div>
             </div>
         </form>
     </div>
     <div class="container mt-3 w-full mx-auto">
+        {% if not prof_bool %}
         {% for course in courses %}
         <a href="{{course.name}}" style="background-color: #333533;" class="w-4/5 md:w-3/5 flex justify-center mx-auto h-16 md:h-12 items-center rounded-sm mt-2">
             <div >
@@ -23,6 +41,16 @@
             </div>
         </a>
         {% endfor %}
-        
+        {% else %}
+        {% for course in courses %}
+        <a href="prof/{{course.name}}" style="background-color: #333533;" class="w-4/5 md:w-3/5 flex justify-center mx-auto h-16 md:h-12 items-center rounded-sm mt-2">
+            <div >
+                <div style="color: #d6d6d6;">
+                        <p>{{ course.name }}</p>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}

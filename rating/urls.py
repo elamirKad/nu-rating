@@ -5,8 +5,8 @@ from django.views.decorators.cache import cache_page
 
 
 urlpatterns = [
-    path('', cache_page(60*60*8)(views.main)),
-    path('<str:course_name>', cache_page(60*60*8)(views.course)),
+    path('', cache_page(60)(views.main)),
+    path('<str:course_name>', cache_page(60)(views.course)),
     path('prof/<str:prof>', views.professor),
     path('register/RsGH2Qs23', views.register),
     path('register/sdfsgFwefsfg32dsF', views.register_courses_details),

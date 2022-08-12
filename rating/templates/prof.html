@@ -39,6 +39,16 @@
                         {{fun}}
                     </div>
                 </div>
+                <div class="flex flex-row space-x-2 my-2 pb-2">
+                    <div class="w-1/3 lg:w-1/5 ml-2">
+                        Courses:
+                    </div>
+                    <div class="">
+                        {% for course in courses%}
+                        <a href="/main/{{course.name}}" style="color: #ffd100;">{{course.name}}</a> / 
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
             
         </div>
@@ -95,8 +105,21 @@
                     </div>
                 </div>
                 <div style="color: #d6d6d6;" class="w-full flex items-center p-2">
-                    <div class="ml-2">
+                    <div class="ml-2 w-11/12">
                         <p>{{ comm.text }}</p>  
+                    </div>
+                    <div class="w-1/12 flex flex-col justify-center items-center">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <input type="text" name="comm_id" id="" value="{{comm.id}}" hidden>
+                            <button type="submit" value="plus" name="rating_change" class="text-xl">+</button>
+                        </form>
+                        <p>{{ comm.comment_rating }}</p>
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <input type="text" name="comm_id" id="" value="{{comm.id}}" hidden>
+                            <button type="submit" value="minus" name="rating_change" class="text-xl">-</button>
+                        </form>
                     </div>
                 </div>
             </div>

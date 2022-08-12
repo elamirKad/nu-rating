@@ -45,11 +45,24 @@
         {% endif %}
     </div>
 </div>
-<div class="container mt-5 mx-auto lg:grid lg:grid-flow-row-dense lg:grid-cols-2 lg:grid-rows-20 lg:w-3/5">
+<div class="container mt-5 mx-auto lg:grid lg:grid-flow-row-dense lg:grid-cols-2 lg:grid-rows-200 lg:w-3/5">
     {% for prof in profs %}
         <a href="prof/{{prof.name}}">
             <div style="background-color: #333533;" class="justify-center flex w-4/5 md:w-4/5 mx-auto lg:my-2 h-16 md:h-12 items-center mt-2 rounded-sm">
-                <div style="color: #d6d6d6;">
+                {% for key, value in prof_rating.items %}
+                {% if key == prof.id %}
+                {% if value == 0 %}
+                <div class="w-1/12 h-16 md:h-12 rounded-tl-sm rounded-bl-sm flex justify-center items-center text-white" style="background-color:#636e72;">{{value}}</div>
+                {% elif value <= 3%}
+                <div class="w-1/12 h-16 md:h-12 rounded-tl-sm rounded-bl-sm flex justify-center items-center text-white" style="background-color:#d63031;">{{value}}</div>
+                {% elif value <= 6%}
+                <div class="w-1/12 h-16 md:h-12 rounded-tl-sm rounded-bl-sm flex justify-center items-center text-black" style="background-color:#ffd100;">{{value}}</div>
+                {% else %}
+                <div class="w-1/12 h-16 md:h-12 rounded-tl-sm rounded-bl-sm flex justify-center items-center text-white" style="background-color:#00b894;">{{value}}</div>
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+                <div style="color: #d6d6d6;" class="w-11/12 flex justify-center">
                     
                         <p>{{ prof.name }}</p>
                     

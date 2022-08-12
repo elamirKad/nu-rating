@@ -13,18 +13,31 @@ import time
 # Create your views here.
 def main(request):
     if request.method == "GET":
+        prof_bool = False
         keywords = request.GET.get('course')
-
-        if keywords:
-            data = Course.objects.filter(name__icontains=keywords).order_by('name')
+        if request.GET.get('search_type') == 'course':
+            if keywords:
+                data = Course.objects.filter(name__icontains=keywords).order_by('name')
+            else:
+                #data = cache.get('data')
+                #if not data:
+                data = Course.objects.all().order_by('name')
+                #cache.set('data', data, 60*60*8)
+        elif request.GET.get('search_type') == 'prof':
+            prof_bool = True
+            if keywords:
+                data = Professor.objects.filter(name__icontains=keywords).order_by('name')
+            else:
+                #data = cache.get('data')
+                #if not data:
+                data = Professor.objects.all().order_by('name')
+                #cache.set('data', data, 60*60*8)
         else:
-            #data = cache.get('data')
-            #if not data:
             data = Course.objects.all().order_by('name')
-            #cache.set('data', data, 60*60*8)
 
         dic = {
-            'courses': data
+            'courses': data,
+            'prof_bool': prof_bool
         }
         return render(request, 'index.html', dic)
     else:
@@ -44,22 +57,50 @@ def course(request, course_name):
         details = CourseDescription.objects.get(course=course)
     except:
         details = None
+
+    prof_dic = {}
+    for prof in profs:
+        comments = Comment.objects.filter(prof=prof.id)
+        if comments:
+            overall, easy, knowledge, fun, amount = calc(comments)
+            prof_dic[prof.id] = overall
+        else:
+            overall, easy, knowledge, fun, amount = 0, 0, 0, 0, 0
+            prof_dic[prof.id] = overall
+
     dic = {
         'course_name': course_name,
         'profs': profs,
         'data': details,
+        'prof_rating': prof_dic
     }
     return render(request, 'course.html', dic)
 
 def professor(request, prof):
     if request.method == "POST":
+        if 'rating_change' in request.POST:
+            if request.session.get(request.POST.get('comm_id'), False):
+                return HttpResponse("You have already voted")
+            comment = Comment.objects.get(id=int(request.POST.get('comm_id')))
+            if request.POST.get('rating_change') == "plus":
+                comment.comment_rating += 1
+            elif request.POST.get('rating_change') == "minus":
+                comment.comment_rating -= 1
+            request.session[request.POST.get('comm_id')] = True
+            comment.save()
+            return redirect(f'/main/prof/{prof}')
+
+        if request.session.get(request.POST.get('prof_id'), False):
+            return HttpResponse("You have already commented")
         comment = Comment(text=request.POST.get('comment'), prof=request.POST.get('prof_id'),
                         easy=request.POST.get('easy'), knowledge=request.POST.get('knowledge'), fun=request.POST.get('fun'))
         comment.save()
+        request.session[request.POST.get('prof_id')] = True
         return redirect(f'/main/prof/{prof}')
     else:
         profess = Professor.objects.get(name=prof)
         comments = Comment.objects.filter(prof=profess.id)
+        all_courses = profess.course_set.all()
         if comments:
             overall, easy, knowledge, fun, amount = calc(comments)
         else:
@@ -71,6 +112,7 @@ def professor(request, prof):
             'knowledge': knowledge,
             'fun': fun,
             'comments': comments,
+            'courses': all_courses
         }
         return render(request, 'prof.html', dic)
 

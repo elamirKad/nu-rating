@@ -82,13 +82,26 @@ WSGI_APPLICATION = 'nurating.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+"""
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd8irk28dijtdj4',
+        'USER': 'qenjkicdcjrzxy',
+        'PASSWORD': '07ecfd763974213f9f3f7d6fc4bda3efb2281bc1ce04ee40b4765505f9aebad1',
+        'HOST': 'ec2-54-75-26-218.eu-west-1.compute.amazonaws.com',
+        'PORT': '5432',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
