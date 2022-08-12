@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-al1u4_@4z&-&0!0b673y$ws9bh%f2!ks4#gvoztx&v9#5fgfk='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'rating',
     "django_cron",
     "debug_toolbar",
-    'captcha',
 ]
 
 MIDDLEWARE = [

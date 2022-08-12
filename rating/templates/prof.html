@@ -48,7 +48,7 @@
             <div class="flex justify-center">
                 <p class="text-2xl p-1">Comments</p>
             </div>
-            <form class="shadow-md rounded px-8 pt-6 pb-8 mb-4" method="post">
+            <form class="shadow-md rounded px-8 pt-6 pb-8 mb-4" method="post" id="commentSubmit">
                 {% csrf_token %}
                 <input hidden type="text" name="prof_id" value="{{profess.id}}">
                 <div class="mb-4">
@@ -104,6 +104,10 @@
     </div>
 
     <script>
+        function onSubmit(token) {
+            document.getElementById("commentSubmit").submit();
+        }
+
 
         easy = document.getElementById("easy");
         easy_text = document.getElementById("easy_text")

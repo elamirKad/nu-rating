@@ -54,7 +54,7 @@ def course(request, course_name):
 def professor(request, prof):
     if request.method == "POST":
         comment = Comment(text=request.POST.get('comment'), prof=request.POST.get('prof_id'),
-                          easy=request.POST.get('easy'), knowledge=request.POST.get('knowledge'), fun=request.POST.get('fun'))
+                        easy=request.POST.get('easy'), knowledge=request.POST.get('knowledge'), fun=request.POST.get('fun'))
         comment.save()
         return redirect(f'/main/prof/{prof}')
     else:
@@ -70,7 +70,7 @@ def professor(request, prof):
             'easy': easy,
             'knowledge': knowledge,
             'fun': fun,
-            'comments': comments
+            'comments': comments,
         }
         return render(request, 'prof.html', dic)
 
