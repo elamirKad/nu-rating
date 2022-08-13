@@ -99,7 +99,7 @@ def professor(request, prof):
         return redirect(f'/main/prof/{prof}')
     else:
         profess = Professor.objects.get(name=prof)
-        comments = Comment.objects.filter(prof=profess.id)
+        comments = Comment.objects.filter(prof=profess.id).order_by('-comment_rating')
         all_courses = profess.course_set.all()
         if comments:
             overall, easy, knowledge, fun, amount = calc(comments)
@@ -220,3 +220,40 @@ def update_course_description(request):
                 flag = True
     elapsed_time = time.time() - start_time
     return JsonResponse({"Success, it took": str(elapsed_time) + " seconds"})
+
+
+def schedule(request):
+    if request.method == "POST":
+        if 'delete' in request.POST:
+            c = Course.objects.get(name=request.POST.get('course_name'))
+            c_temp = CourseDescription.objects.get(course=c)
+            arr = request.session[request.POST.get('semester')]
+            del arr[request.session[request.POST.get('semester')].index(request.POST.get('course_name'))]
+            request.session[request.POST.get('semester')] = arr
+            request.session[request.POST.get('semester') + "_ects"] -= c_temp.ects
+            return redirect("/main/schedule/")
+
+        for key, value in request.POST.items():
+
+            if key in request.session:
+                #del request.session[key]
+                request.session[key] += [value]
+                c = Course.objects.get(name=value)
+                c_temp = CourseDescription.objects.get(course=c)
+                try:
+                    request.session[key+"_ects"] += c_temp.ects
+                except:
+                    request.session[key + "_ects"] = c_temp.ects
+            elif key in [str(i)+"_semester" for i in range(1,9)]:
+                #pass
+                request.session[key] = [value]
+                c = Course.objects.get(name=value)
+                c_temp = CourseDescription.objects.get(course=c)
+                request.session[key + "_ects"] = c_temp.ects
+        return redirect("/main/schedule/")
+    else:
+        courses = Course.objects.all()
+        dic = {
+            'courses': courses
+        }
+        return render(request, 'schedule.html', dic)

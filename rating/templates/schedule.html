@@ -1,0 +1,262 @@
+{% extends 'base.html' %}
+{% block title %}Schedule{% endblock %}
+{% block content %}
+<div class="container text-white mx-auto mt-10" id="window">
+    <div class="grid grid-cols-2 gap-10 mx-auto">
+        <div class="mx-auto w-full divide-y divide-black">
+            <div class="w-full rounded-t-md flex justify-center p-2" style="background-color: #282828;">
+                Semester 1
+            </div>
+            {% for course_sem in request.session.1_semester %}
+                
+                <div class="w-full flex flex-wrap justify-center p-2" style="background-color: #333533;">
+                    <div class="w-11/12 flex">{{course_sem}}</div>
+                    
+                    <form method="post" id="{{course_sem}}" class="w-1/12 flex justify-center">
+                        {% csrf_token %}
+                        <input type="text" value="{{course_sem}}" name="course_name" hidden>
+                        <input type="text" value="1_semester" name="semester" hidden>
+                        <button type="submit" name="delete">x</button>
+                    </form>
+                </div>
+            {% endfor %}
+            <div onmouseup="click_add(1)" id="1_semester_wrap" class="">
+                <div class="w-full flex flex-wrap justify-center p-2" style="background-color: #333533;" id="1_semester">
+                    Add
+                </div>
+            </div>
+            <div class="w-full rounded-b-md flex justify-center p-2" style="background-color: #282828;">
+                ECTS: {{request.session.1_semester_ects}}
+            </div>
+        </div>
+        <div class="mx-auto w-full divide-y divide-black">
+            <div class="w-full rounded-t-md flex justify-center p-2" style="background-color: #282828;">
+                Semester 2
+            </div>
+            {% for course_sem in request.session.2_semester %}
+                <div class="w-full flex flex-wrap justify-center p-2" style="background-color: #333533;">
+                    <div class="w-11/12 flex">{{course_sem}}</div>
+                    
+                    <form method="post" id="{{course_sem}}" class="w-1/12 flex justify-center">
+                        {% csrf_token %}
+                        <input type="text" value="{{course_sem}}" name="course_name" hidden>
+                        <input type="text" value="2_semester" name="semester" hidden>
+                        <button type="submit" name="delete" class="w-full h-full">x</button>
+                    </form>
+                </div>
+            {% endfor %}
+            <div onmouseup="click_add(2)" id="2_semester_wrap" class="">
+                <div class="w-full flex flex-wrap justify-center p-2" style="background-color: #333533;" id="2_semester">
+                    Add
+                </div>
+            </div>
+            <div class="w-full rounded-b-md flex justify-center p-2" style="background-color: #282828;">
+                ECTS: {{request.session.2_semester_ects}}
+            </div>
+        </div>
+        <div class="mx-auto w-full divide-y divide-black">
+            <div class="w-full rounded-t-md flex justify-center p-2" style="background-color: #282828;">
+                Semester 3
+            </div>
+            {% for course_sem in request.session.3_semester %}
+                <div class="w-full flex flex-wrap justify-center p-2" style="background-color: #333533;">
+                    <div class="w-11/12 flex">{{course_sem}}</div>
+                    
+                    <form method="post" id="{{course_sem}}" class="w-1/12 flex justify-center">
+                        {% csrf_token %}
+                        <input type="text" value="{{course_sem}}" name="course_name" hidden>
+                        <input type="text" value="3_semester" name="semester" hidden>
+                        <button type="submit" name="delete" class="w-full h-full">x</button>
+                    </form>
+                </div>
+            {% endfor %}
+            <div onmouseup="click_add(3)" id="3_semester_wrap" class="">
+                <div class="w-full flex flex-wrap justify-center p-2" style="background-color: #333533;" id="3_semester">
+                    Add
+                </div>
+            </div>
+            <div class="w-full rounded-b-md flex justify-center p-2" style="background-color: #282828;">
+                ECTS: {{request.session.3_semester_ects}}
+            </div>
+        </div>
+        <div class="mx-auto w-full divide-y divide-black">
+            <div class="w-full rounded-t-md flex justify-center p-2" style="background-color: #282828;">
+                Semester 4
+            </div>
+            {% for course_sem in request.session.4_semester %}
+                <div class="w-full flex flex-wrap justify-center p-2" style="background-color: #333533;">
+                    <div class="w-11/12 flex">{{course_sem}}</div>
+                    
+                    <form method="post" id="{{course_sem}}" class="w-1/12 flex justify-center">
+                        {% csrf_token %}
+                        <input type="text" value="{{course_sem}}" name="course_name" hidden>
+                        <input type="text" value="4_semester" name="semester" hidden>
+                        <button type="submit" name="delete" class="w-full h-full">x</button>
+                    </form>
+                </div>
+            {% endfor %}
+            <div onmouseup="click_add(4)" id="4_semester_wrap" class="">
+                <div class="w-full flex flex-wrap justify-center p-2" style="background-color: #333533;" id="4_semester">
+                    Add
+                </div>
+            </div>
+            <div class="w-full rounded-b-md flex justify-center p-2" style="background-color: #282828;">
+                ECTS: {{request.session.4_semester_ects}}
+            </div>
+        </div>
+        <div class="mx-auto w-full divide-y divide-black">
+            <div class="w-full rounded-t-md flex justify-center p-2" style="background-color: #282828;">
+                Semester 5
+            </div>
+            {% for course_sem in request.session.5_semester %}
+                <div class="w-full flex flex-wrap justify-center p-2" style="background-color: #333533;">
+                    <div class="w-11/12 flex">{{course_sem}}</div>
+                    
+                    <form method="post" id="{{course_sem}}" class="w-1/12 flex justify-center">
+                        {% csrf_token %}
+                        <input type="text" value="{{course_sem}}" name="course_name" hidden>
+                        <input type="text" value="5_semester" name="semester" hidden>
+                        <button type="submit" name="delete" class="w-full h-full">x</button>
+                    </form>
+                </div>
+            {% endfor %}
+            <div onmouseup="click_add(5)" id="5_semester_wrap" class="">
+                <div class="w-full flex flex-wrap justify-center p-2" style="background-color: #333533;" id="5_semester">
+                    Add
+                </div>
+            </div>
+            <div class="w-full rounded-b-md flex justify-center p-2" style="background-color: #282828;">
+                ECTS: {{request.session.5_semester_ects}}
+            </div>
+        </div>
+        <div class="mx-auto w-full divide-y divide-black">
+            <div class="w-full rounded-t-md flex justify-center p-2" style="background-color: #282828;">
+                Semester 6
+            </div>
+            {% for course_sem in request.session.6_semester %}
+                <div class="w-full flex flex-wrap justify-center p-2" style="background-color: #333533;">
+                    <div class="w-11/12 flex">{{course_sem}}</div>
+                    
+                    <form method="post" id="{{course_sem}}" class="w-1/12 flex justify-center">
+                        {% csrf_token %}
+                        <input type="text" value="{{course_sem}}" name="course_name" hidden>
+                        <input type="text" value="6_semester" name="semester" hidden>
+                        <button type="submit" name="delete" class="w-full h-full">x</button>
+                    </form>
+                </div>
+            {% endfor %}
+            <div onmouseup="click_add(6)" id="6_semester_wrap" class="">
+                <div class="w-full flex flex-wrap justify-center p-2" style="background-color: #333533;" id="6_semester">
+                    Add
+                </div>
+            </div>
+            <div class="w-full rounded-b-md flex justify-center p-2" style="background-color: #282828;">
+                ECTS: {{request.session.6_semester_ects}}
+            </div>
+        </div>
+        <div class="mx-auto w-full divide-y divide-black">
+            <div class="w-full rounded-t-md flex justify-center p-2" style="background-color: #282828;">
+                Semester 7
+            </div>
+            {% for course_sem in request.session.7_semester %}
+                <div class="w-full flex flex-wrap justify-center p-2" style="background-color: #333533;">
+                    <div class="w-11/12 flex">{{course_sem}}</div>
+                    
+                    <form method="post" id="{{course_sem}}" class="w-1/12 flex justify-center">
+                        {% csrf_token %}
+                        <input type="text" value="{{course_sem}}" name="course_name" hidden>
+                        <input type="text" value="7_semester" name="semester" hidden>
+                        <button type="submit" name="delete" class="w-full h-full">x</button>
+                    </form>
+                </div>
+            {% endfor %}
+            <div onmouseup="click_add(7)" id="7_semester_wrap" class="">
+                <div class="w-full flex flex-wrap justify-center p-2" style="background-color: #333533;" id="7_semester">
+                    Add
+                </div>
+            </div>
+            <div class="w-full rounded-b-md flex justify-center p-2" style="background-color: #282828;">
+                ECTS: {{request.session.7_semester_ects}}
+            </div>
+        </div>
+        <div class="mx-auto w-full divide-y divide-black">
+            <div class="w-full rounded-t-md flex justify-center p-2" style="background-color: #282828;">
+                Semester 8
+            </div>
+            {% for course_sem in request.session.8_semester %}
+                <div class="w-full flex flex-wrap justify-center p-2" style="background-color: #333533;">
+                    <div class="w-11/12 flex">{{course_sem}}</div> 
+                    
+                    <form method="post" id="{{course_sem}}" class="w-1/12 flex justify-center">
+                        {% csrf_token %}
+                        <input type="text" value="{{course_sem}}" name="course_name" hidden>
+                        <input type="text" value="8_semester" name="semester" hidden>
+                        <button type="submit" name="delete" class="w-full h-full">x</button>
+                    </form>
+                </div>
+            {% endfor %}
+            <div onmouseup="click_add(8)" id="8_semester_wrap" class="">
+                <div class="w-full flex flex-wrap justify-center p-2" style="background-color: #333533;" id="8_semester">
+                    Add
+                </div>
+            </div>
+            <div class="w-full rounded-b-md flex justify-center p-2" style="background-color: #282828;">
+                ECTS: {{request.session.8_semester_ects}}
+                
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var prev_el;
+    function click_add(semester){
+        
+        if (prev_el){
+            document.getElementById(prev_el+"_semester_wrap").innerHTML = '<div class="w-full flex flex-wrap justify-center p-2" style="background-color: #333533;" id="'+prev_el+'_semester">Add</div>';
+            document.getElementById(prev_el+"_semester_wrap").setAttribute('onmouseup', 'click_add('+prev_el+')')
+        }
+        prev_el = semester;
+        document.getElementById(semester+"_semester").innerHTML = '<form method="post" class="w-full flex flex-wrap justify-center">{% csrf_token %}<input id="course" autocomplete="off" type="text" style="background-color: #d6d6d6; color: #333533;" class="block p-2 text-sm w-4/5" name="' + semester + '_semester" placeholder="Input course"><button type="submit" class="w-1/5 btn text-white font-semibold py-2 px-4" style="background-color: #ffd100; color: black;">Add</button><div class="w-full bg-white text-black"><ul id="results" class="divide-y divide-black"></ul></div></form>';
+        document.getElementById(semester+"_semester_wrap").removeAttribute('onmouseup')
+        const data = [{% for course in courses%} "{{course.name}}", {% endfor %}];
+        const autocomplete = document.getElementById("course");
+        const resultsHTML = document.getElementById("results");
+        autocomplete.oninput = function () {
+            autocomplete.value = autocomplete.value.toUpperCase();
+            let results = [];
+            const userInput = this.value;
+            resultsHTML.innerHTML = "";
+            if (userInput.length > 0) {
+                results = getResults(userInput);
+                resultsHTML.style.display = "block";
+                let val = 5;
+                if (results.length < val){
+                    val = results.length;
+                }
+                
+                for (i = 0; i < val; i++) {
+                resultsHTML.innerHTML += "<li class='p-2'>" + results[i] + "</li>";
+                }
+            }
+        };
+        resultsHTML.onclick = function (event) {
+            let setValue = event.target.innerText;
+            autocomplete.value = setValue;
+            this.innerHTML = "";
+        };
+        function getResults(input) {
+            let results = [];
+            for (i = 0; i < data.length; i++) {
+                if (input === data[i].slice(0, input.length)) {
+                results.push(data[i]);
+                }
+            }
+            return results;
+        }
+
+
+        }
+    
+</script>
+{% endblock %}
+

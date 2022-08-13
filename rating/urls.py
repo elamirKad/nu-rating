@@ -12,5 +12,5 @@ urlpatterns = [
     path('register/sdfsgFwefsfg32dsF', views.register_courses_details),
     path('email/', views.check_mail),
     path('register/fsdfEF23dsf3r224dsF', views.update_course_description),
-
+    path('schedule/', views.schedule)
 ]

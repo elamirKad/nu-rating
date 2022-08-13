@@ -91,7 +91,7 @@ DATABASES = {
     }
 }
 """
-
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -99,6 +99,17 @@ DATABASES = {
         'USER': 'qenjkicdcjrzxy',
         'PASSWORD': '07ecfd763974213f9f3f7d6fc4bda3efb2281bc1ce04ee40b4765505f9aebad1',
         'HOST': 'ec2-54-75-26-218.eu-west-1.compute.amazonaws.com',
+        'PORT': '5432',
+    }
+}
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'nurating',
+        'USER': 'postgres',
+        'PASSWORD': 'elamir',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
