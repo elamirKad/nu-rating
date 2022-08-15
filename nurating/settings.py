@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'rating',
     "django_cron",
     "debug_toolbar",
+    'leetcode',
 ]
 
 MIDDLEWARE = [

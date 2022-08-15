@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Leetcode{% endblock %}
+{% block content %}
+    <div class="container w-full mx-auto mt-3">
+        <div class="w-1/3 mx-auto text-white p-2" style="background-color: #333533;">
+            <div class="text-xl flex justify-center">
+                Add new user
+            </div>
+            <div class="">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="text-black">
+                        Name: <input type="text" name="name">
+                    </div>
+                    <br>
+                    <div class="text-black">
+                        Leetcode username: <input type="text" name="link">
+                    </div>
+                    <button type="submit" class="bg-black">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-3 w-full mx-auto">
+        {% for course in courses %}
+        <a href="https://leetcode.com/{{course.link}}/" style="background-color: #333533;" class="w-4/5 md:w-3/5 flex justify-center mx-auto h-16 md:h-12 items-center rounded-sm mt-2">
+            <div >
+                <div style="color: #d6d6d6;">
+                        <p>{{ forloop.counter }}. {{ course.name }} {{course.rating}}</p>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+{% endblock %}
