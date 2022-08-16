@@ -3,16 +3,18 @@ from django.shortcuts import render, redirect
 from leetcode.models import *
 from leetcode.leetcodeapi import *
 import time
+from datetime import datetime
 from django.db.models import Sum
 
 # Create your views here.
 def main(request):
     if request.method == "POST":
-        rating, contests_num, percentage = return_rating(request.POST.get('link'))
-        easy, medium, hard = return_tasks(request.POST.get('link'))
-        l = Leetcode(name=request.POST.get('name'), link=request.POST.get('link'), rating=rating, change=rating, total=easy+medium+hard, easy=easy, medium=medium,
-                     hard=hard, contests_count=contests_num, top_percentage=percentage, img_url=get_image(request.POST.get('link')))
-        l.save()
+        if not Leetcode.objects.filter(link=request.POST.get('link')).exists():
+            rating, contests_num, percentage = return_rating(request.POST.get('link'))
+            easy, medium, hard = return_tasks(request.POST.get('link'))
+            l = Leetcode(name=request.POST.get('name'), link=request.POST.get('link'), rating=rating, change=rating, total=easy+medium+hard, easy=easy, medium=medium,
+                         hard=hard, contests_count=contests_num, top_percentage=percentage, img_url=get_image(request.POST.get('link')))
+            l.save()
         return redirect('/leetcode/')
     else:
         leet = Leetcode.objects.all().order_by('-rating')
@@ -40,3 +42,44 @@ def update(request):
         l.save()
     elapsed_time = time.time() - start_time
     return redirect('/leetcode/')
+
+def user(request, username):
+    l = Leetcode.objects.get(link=username)
+    l_history = ContestUser.objects.filter(user=l)
+    for lh in l_history:
+        lh.contest.starttime = datetime.fromtimestamp(int(lh.contest.starttime)).strftime("%m.%d.%y")
+    dic = {
+        "leet": l,
+        "history": l_history
+    }
+    return render(request, 'user.html', dic)
+
+def add_contests(request):
+    import time
+    start_time = time.time()
+    for i in range(1, 200):
+        total, title, time = return_contests('sulrz', i)
+        if not Contest.objects.filter(title=title).exists():
+            c = Contest(totalPorblems=total, title=title, starttime=time)
+            c.save()
+    elapsed_time = time.time() - start_time
+    return JsonResponse({'Success': f'it took {elapsed_time}'})
+
+def update_users(request):
+    import time
+    start_time = time.time()
+    leetcodes = Leetcode.objects.all()
+    for leet in leetcodes:
+        print(f"{leet.name} started")
+        for i in range(1, 63):
+            attended, trend, finish, solved, rating, ranking, title = return_user(leet.name, i)
+            if attended:
+                print(title)
+                c = Contest.objects.get(title=title)
+                c_u = ContestUser(user=leet, contest=c, attended=attended, trend=trend, finish=finish, solved=solved, rating=rating, ranking=ranking)
+                c_u.save()
+                print(f"{leet.name} contest added")
+            else:
+                print("Not attended")
+    elapsed_time = time.time() - start_time
+    return JsonResponse({'Success': f'it took {elapsed_time}'})

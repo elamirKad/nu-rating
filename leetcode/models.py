@@ -18,3 +18,13 @@ class Contest(models.Model):
     totalPorblems = models.IntegerField()
     title = models.CharField(max_length=1000)
     starttime = models.CharField(max_length=1000)
+
+class ContestUser(models.Model):
+    user = models.ForeignKey("Leetcode", on_delete=models.CASCADE)
+    contest = models.ForeignKey("Contest", on_delete=models.CASCADE, default=None)
+    attended = models.BooleanField(default=False)
+    trend = models.CharField(max_length=1000, default='NONE')
+    solved = models.IntegerField(default=0)
+    finish = models.IntegerField(default=0)
+    rating = models.IntegerField(default=1500)
+    ranking = models.IntegerField(default=0)

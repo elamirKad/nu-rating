@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block title %}Leetcode{% endblock %}
+{% block content %}
+
+<div style="color: #d6d6d6;" class="container mx-auto">
+    <div style="background-color: #333533;" class="w-11/12 md:w-4/5 lg:w-3/5 xl:w-3/6 2xl:w-2/5 mx-auto rounded-md mt-10">
+        <div style="background-color: #282828;" class="w-full rounded-t-md flex justify-center py-1">
+            <p class="text-xl">{{ leet.name }}</p>
+        </div>
+        <div class="divide-y divide-gray-700">
+            <div class="flex flex-row space-x-2 my-2 justify-center">
+                <img src="{{leet.img_url}}" alt="" class="object-contain h-24 w-24">
+            </div>
+            <div class="flex flex-row space-x-2 my-2">
+                <div class="w-1/3 lg:w-1/5 ml-2">
+                    Rating
+                </div>
+                <div class="">
+                    {{leet.rating}}
+                </div>
+            </div>
+            <div class="flex flex-row space-x-2 my-2 items-center">
+                <div class="w-1/3 lg:w-1/5 ml-2">
+                    Solved:
+                </div>
+                <div class="flex flex-row text-xs items-center">
+                    <p style="background-color: #576574;" class="rounded-lg px-1">{{ leet.total }}</p>
+                    <p style="background-color: #05c46b;" class="rounded-lg px-1">{{ leet.easy }}</p>
+                    <p style="background-color: #ffa801;" class="rounded-lg px-1">{{ leet.medium }}</p>
+                    <p style="background-color: #ff3f34;" class="rounded-lg px-1">{{ leet.hard }}</p>
+                </div>
+            </div>
+            <div class="flex flex-row space-x-2 my-2 items-center">
+                <div class="w-1/3 lg:w-1/5 ml-2">
+                    Top: 
+                </div>
+                <div class="">
+                    {{leet.top_percentage}}%
+                </div>
+            </div>
+            <div class="flex flex-row space-x-2 my-2 pb-2">
+                <div class="w-1/3 lg:w-1/5 ml-2">
+                    Link:
+                </div>
+                <div class="">
+                    <a href="https://leetcode.com/{{leet.link}}/" style="color: #ffd100;">{{leet.link}}</a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+<div class="container mt-3 w-full mx-auto">
+    <div style="background-color: #333533;" class="w-4/5 md:w-3/5 flex mx-auto h-16 md:h-12 items-center rounded-sm mt-2">
+        <div style="color: #d6d6d6;" class="w-1/12 flex justify-center items-center">
+            <p>#</p>
+        </div>
+        <div style="color: #d6d6d6;" class="w-1/4 flex justify-center items-center">
+            <p>Contest</p>
+        </div>
+        <div style="color: #d6d6d6;" class="w-1/6 flex justify-center items-center">
+            <p>Solved/Total</p>
+        </div>
+        <div style="color: #d6d6d6;" class="w-1/12 flex justify-center items-center">
+            <p>Time (s)</p>
+        </div>
+        <div style="color: #d6d6d6;" class="w-1/12 flex justify-center items-center">
+            <p>Rating</p>
+        </div>
+        <div style="color: #d6d6d6;" class="w-1/12 flex justify-center items-center">
+            <p>Trend</p>
+        </div>
+        <div style="color: #d6d6d6;" class="w-1/12 flex justify-center items-center">
+            <p>Ranking</p>
+        </div>
+        <div style="color: #d6d6d6;" class="w-1/6 flex justify-center items-center">
+            <p>Date</p>
+        </div>
+    </div>
+    {% for hst in history %}
+    <div style="background-color: #333533;" class="w-4/5 md:w-3/5 flex mx-auto h-16 md:h-12 items-center rounded-sm mt-2">
+        <div style="color: #d6d6d6;" class="w-1/12 flex justify-center items-center">
+                <p>{{ forloop.counter }}.</p>
+        </div>
+        <div style="color: #d6d6d6;" class="w-1/4 flex justify-center items-center">
+            <p>{{ hst.contest.title }}</p>
+        </div>
+        <div style="color: #d6d6d6;" class="w-1/6 flex justify-center items-center">
+            <p>{{ hst.solved }}/{{hst.contest.totalPorblems}}</p>
+        </div>
+        <div style="color: #d6d6d6;" class="w-1/12 flex justify-center items-center">
+            <p>{{ hst.finish }}</p>
+        </div>
+        <div style="color: #d6d6d6;" class="w-1/12 flex justify-center items-center">
+            {% if hst.trend == "UP" %}
+            <p style="color:#10ac84;">{{ hst.rating }}</p>
+            {% elif hst.trend == "DOWN"%}
+            <p style="color:#ee5253;">{{ hst.rating }}</p>
+            {% endif %}
+        </div>
+        <div style="color: #d6d6d6;" class="w-1/12 flex justify-center items-center">
+            <p>{{ hst.trend }}</p>
+        </div>
+        <div style="color: #d6d6d6;" class="w-1/12 flex justify-center items-center">
+            <p>{{ hst.ranking }}</p>
+        </div>
+        <div style="color: #d6d6d6;" class="w-1/6 flex justify-center items-center">
+            <p>{{ hst.contest.starttime }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

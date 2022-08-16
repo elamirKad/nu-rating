@@ -57,7 +57,7 @@
             </div>
         </div>
         {% for leet in leetcodes %}
-        <a href="https://leetcode.com/{{leet.link}}/" style="background-color: #333533;" class="w-4/5 md:w-3/5 flex mx-auto h-16 md:h-12 items-center rounded-sm mt-2">
+        <a href="{{leet.link}}" style="background-color: #333533;" class="w-4/5 md:w-3/5 flex mx-auto h-16 md:h-12 items-center rounded-sm mt-2">
             <div style="color: #d6d6d6;" class="w-1/12 flex justify-center items-center">
                     <p>{{ forloop.counter }}.</p>
             </div>
