@@ -2,32 +2,87 @@
 {% block title %}Leetcode{% endblock %}
 {% block content %}
     <div class="container w-full mx-auto mt-3">
-        <div class="w-1/3 mx-auto text-white p-2" style="background-color: #333533;">
+        <div class="w-1/3 mx-auto text-white p-2 rounded-sm" style="background-color: #333533;">
             <div class="text-xl flex justify-center">
                 Add new user
             </div>
-            <div class="">
-                <form method="post">
+                <form method="post" class="">
                     {% csrf_token %}
-                    <div class="text-black">
-                        Name: <input type="text" name="name">
+                    <div class="mb-2">
+                        <label class="block text-sm mb-2" for="username">
+                            Name:
+                        </label>
+                        <input type="text" name="name" style="background-color: #d6d6d6; color: #333533;" class="block p-2 w-full text-sm
+                        rounded-sm">
                     </div>
                     <br>
-                    <div class="text-black">
-                        Leetcode username: <input type="text" name="link">
+                    <div class="mb-4">
+                        <label class="block text-sm mb-2" for="username">
+                            Username:
+                        </label>
+                        <input type="text" name="link" style="background-color: #d6d6d6; color: #333533;" class="block p-2 w-full text-sm
+                        rounded-sm">
                     </div>
-                    <button type="submit" class="bg-black">Submit</button>
+                    <div class="mb-2 flex flex-row space-x-2 justify-center">
+                        <button style="background-color: #ffd100; color: white;" type="submit" class="btn w-3/5 font-bold py-2 px-4 rounded-sm">Add</button>
+                    </div>
                 </form>
-            </div>
         </div>
     </div>
     <div class="container mt-3 w-full mx-auto">
-        {% for course in courses %}
-        <a href="https://leetcode.com/{{course.link}}/" style="background-color: #333533;" class="w-4/5 md:w-3/5 flex justify-center mx-auto h-16 md:h-12 items-center rounded-sm mt-2">
-            <div >
-                <div style="color: #d6d6d6;">
-                        <p>{{ forloop.counter }}. {{ course.name }} {{course.rating}}</p>
-                </div>
+        <div style="background-color: #333533;" class="w-4/5 md:w-3/5 flex mx-auto h-16 md:h-12 items-center rounded-sm mt-2">
+            <div style="color: #d6d6d6;" class="w-1/12 flex justify-center items-center">
+                <p>#</p>
+            </div>
+            <div style="color: #d6d6d6;" class="w-1/12 flex justify-center items-center">
+                <p>Image</p>
+            </div>
+            <div style="color: #d6d6d6;" class="w-1/6 flex justify-center items-center">
+                <p>Username</p>
+            </div>
+            <div style="color: #d6d6d6;" class="w-1/12 flex justify-center items-center">
+                <p>Rating</p>
+            </div>
+            <div style="color: #d6d6d6;" class="w-1/12 flex justify-center items-center">
+                <p>Total</p>
+            </div>
+            <div style="color: white;" class="w-1/6 flex justify-center items-center">
+                <p>E/M/H</p>
+            </div>
+            <div style="color: #d6d6d6;" class="w-1/12 flex justify-center items-center">
+                <p>Contests</p>
+            </div>
+            <div style="color: #d6d6d6;" class="w-1/12 flex justify-center items-center">
+                <p>Top %</p>
+            </div>
+        </div>
+        {% for leet in leetcodes %}
+        <a href="https://leetcode.com/{{leet.link}}/" style="background-color: #333533;" class="w-4/5 md:w-3/5 flex mx-auto h-16 md:h-12 items-center rounded-sm mt-2">
+            <div style="color: #d6d6d6;" class="w-1/12 flex justify-center items-center">
+                    <p>{{ forloop.counter }}.</p>
+            </div>
+            <div style="color: #d6d6d6;" class="w-1/12 flex justify-center items-center">
+                <img src="{{leet.img_url}}" alt="" class="object-contain h-10 w-10">
+            </div>
+            <div style="color: #d6d6d6;" class="w-1/6 flex justify-center items-center">
+                <p>{{ leet.name }}</p>
+            </div>
+            <div style="color: #d6d6d6;" class="w-1/12 flex justify-center items-center">
+                <p>{{ leet.rating }}</p>
+            </div>
+            <div style="color: #d6d6d6;" class="w-1/12 flex justify-center items-center">
+                <p>{{ leet.total }}</p>
+            </div>
+            <div style="color: white;" class="w-1/6 flex justify-center items-center text-xs space-x-2">
+                <p style="background-color: #05c46b;" class="rounded-lg px-1">{{ leet.easy }}</p>
+                <p style="background-color: #ffa801;" class="rounded-lg px-1">{{ leet.medium }}</p>
+                <p style="background-color: #ff3f34;" class="rounded-lg px-1">{{ leet.hard }}</p>
+            </div>
+            <div style="color: #d6d6d6;" class="w-1/12 flex justify-center items-center">
+                <p>{{ leet.contests_count }}</p>
+            </div>
+            <div style="color: #d6d6d6;" class="w-1/12 flex justify-center items-center">
+                <p>{{ leet.top_percentage }}</p>
             </div>
         </a>
         {% endfor %}
