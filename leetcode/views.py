@@ -45,7 +45,7 @@ def update(request):
 
 def user(request, username):
     l = Leetcode.objects.get(link=username)
-    l_history = ContestUser.objects.filter(user=l)
+    l_history = ContestUser.objects.filter(user=l).order_by('-contest__starttime')
     for lh in l_history:
         lh.contest.starttime = datetime.fromtimestamp(int(lh.contest.starttime)).strftime("%m.%d.%y")
     dic = {
@@ -58,9 +58,9 @@ def add_contests(request):
     import time
     start_time = time.time()
     for i in range(1, 3):
-        total, title, time = return_contests('sulrz', i)
+        total, title, times = return_contests('sulrz', i)
         if not Contest.objects.filter(title=title).exists():
-            c = Contest(totalPorblems=total, title=title, starttime=time)
+            c = Contest(totalPorblems=total, title=title, starttime=times)
             c.save()
     elapsed_time = time.time() - start_time
     return JsonResponse({'Success': f'it took {elapsed_time}'})
@@ -71,15 +71,21 @@ def update_users(request):
     leetcodes = Leetcode.objects.all()
     for leet in leetcodes:
         print(f"{leet.name} started")
-        for i in range(1, 3):
-            attended, trend, finish, solved, rating, ranking, title = return_user(leet.name, i)
-            if attended:
-                print(title)
-                c = Contest.objects.get(title=title)
-                c_u = ContestUser(user=leet, contest=c, attended=attended, trend=trend, finish=finish, solved=solved, rating=rating, ranking=ranking)
-                c_u.save()
-                print(f"{leet.name} contest added")
-            else:
-                print("Not attended")
+        for i in range(1, 20):
+            try:
+                attended, trend, finish, solved, rating, ranking, title = return_user(leet.name, i)
+                if not ContestUser.objects.filter(user=leet, contest=Contest.objects.get(title=title)).exists():
+                    if attended:
+                        print(title)
+                        c = Contest.objects.get(title=title)
+                        c_u = ContestUser(user=leet, contest=c, attended=attended, trend=trend, finish=finish, solved=solved, rating=rating, ranking=ranking)
+                        c_u.save()
+                        print(f"{leet.name} contest added")
+                    else:
+                        print("Not attended")
+                else:
+                    print(title + " exists")
+            except:
+                pass
     elapsed_time = time.time() - start_time
     return JsonResponse({'Success': f'it took {elapsed_time}'})
