@@ -57,7 +57,7 @@ def user(request, username):
 def add_contests(request):
     import time
     start_time = time.time()
-    for i in range(1, 200):
+    for i in range(1, 3):
         total, title, time = return_contests('sulrz', i)
         if not Contest.objects.filter(title=title).exists():
             c = Contest(totalPorblems=total, title=title, starttime=time)
@@ -71,7 +71,7 @@ def update_users(request):
     leetcodes = Leetcode.objects.all()
     for leet in leetcodes:
         print(f"{leet.name} started")
-        for i in range(1, 63):
+        for i in range(1, 3):
             attended, trend, finish, solved, rating, ranking, title = return_user(leet.name, i)
             if attended:
                 print(title)
